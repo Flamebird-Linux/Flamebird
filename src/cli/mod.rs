@@ -3,11 +3,19 @@
 // 导入 clap 库中的 Arg、ArgAction 和 Command 结构体，用于构建命令行接口
 use clap::{Arg, ArgAction, Command};
 
-// 引入当前模块下的 version 子模块
+// 引入当前模块下的 install 子模块 文件路径为 src/cli/install.rs
+mod install;
+// 引入当前模块下的 remove 子模块 文件路径为 src/cli/remove.rs
+mod remove;
+// 引入当前模块下的 version 子模块 文件路径为 src/cli/version.rs
 mod version;
 
-// 从 src/cli/version 子模块中导入所有公共项
+// 从 version 子模块中导入所有公共项 文件路径为 src/cli/version.rs
 use crate::cli::version::*;
+
+// 表示从当前模块的 install remove 子模块导入，而不是从外部 crate 导入。
+// 文件路径为 src/cli/install.rs, src/cli/remove.rs
+use self::{install::install_command, remove::remove_command};
 
 // 定义 cli_main 函数，该函数返回一个 Command 结构体实例
 fn cli_main() -> Command {
@@ -28,6 +36,10 @@ fn cli_main() -> Command {
         )
         // 要求至少指定一个参数，否则显示帮助信息
        .arg_required_else_help(true)
+       // 为命令添加一个子命令，该子命令由 install_command 函数生成
+       .subcommand(install_command())
+       // 为命令添加一个子命令，该子命令由 remove_command 函数生成
+       .subcommand(remove_command())
         // 为命令添加一个子命令，该子命令由 version_command 函数生成
        .subcommand(version_command())
 }
