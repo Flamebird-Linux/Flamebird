@@ -12,15 +12,14 @@ mod remove;
 // 引入当前模块下的 version 子模块 文件路径为 src/cli/version.rs
 mod version;
 
-// 从 version 子模块中导入所有公共项 文件路径为 src/cli/version.rs
-use crate::cli::version::*;
-
-// 表示从当前模块的 install list remove 子模块导入，而不是从外部 crate 导入。
-// 文件路径为 src/cli/install.rs, src/cli/list.rs, src/cli/remove.rs
+// 表示从当前模块的 install list remove version 子模块导入，而不是从外部 crate 导入。
+// 文件路径为 src/cli/install.rs, src/cli/list.rs, src/cli/remove.rs 
+// src/cli/version.rs
 use self::{
     install::install_command, 
     list::{list_command, list_command_handler},
     remove::remove_command,
+    version::*
 };
 
 // 定义 cli_main 函数，该函数返回一个 Command 结构体实例
