@@ -13,10 +13,24 @@ pub fn list_command() -> Command {
        .long_about("List packages according to a filter")
         // 要求该命令必须指定一个子命令，否则会报错
        .subcommand_required(true)
-        // 为 "list" 命令添加一个子命令 "installed"
-       .subcommand(Command::new("installed").about("List all installed packages"))
+
+	    // 为 "list" 命令添加一个子命令 "installed"
+	   .subcommand(
+
+	       Command::new("installed")
+	       		// 为该子命令添加简要描述信息
+	       		.about("List all installed packages")
+	       		// 为该子命令添加别名
+	       		.visible_alias("li"),
+	   )
         // 为 "list" 命令添加另一个子命令 "available"
-       .subcommand(Command::new("available").about("List all available packages"))
+		.subcommand(
+	       Command::new("available")
+	       		// 为该子命令添加简要描述信息
+	       		.about("List all available packages")
+	       		// 为该子命令添加别名
+				.visible_alias("la"),
+		)
 }
 
 // 定义一个公共函数 list_command_handler，用于处理 "list" 命令
