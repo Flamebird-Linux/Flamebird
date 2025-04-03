@@ -1,7 +1,10 @@
-[package]
-name = "flameforge"
+[workspace]
+members = ["flameforge"]
+
+[workspace.package]
 version = "0.1.0"
 edition = "2024"
 
-[dependencies]
+[workspace.dependencies]
 clap = "4.5.35"
+diesel = { version = "2.2.8", features = ["sqlite"] }
