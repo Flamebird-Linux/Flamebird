@@ -5,6 +5,8 @@ use clap::{Arg, ArgAction, Command};
 
 // 引入当前模块下的 install 子模块 文件路径为 src/cli/install.rs
 mod install;
+// 引入当前模块下的 mod 子模块 文件路径为 src/cli/list.rs
+mod list;
 // 引入当前模块下的 remove 子模块 文件路径为 src/cli/remove.rs
 mod remove;
 // 引入当前模块下的 version 子模块 文件路径为 src/cli/version.rs
@@ -13,9 +15,13 @@ mod version;
 // 从 version 子模块中导入所有公共项 文件路径为 src/cli/version.rs
 use crate::cli::version::*;
 
-// 表示从当前模块的 install remove 子模块导入，而不是从外部 crate 导入。
-// 文件路径为 src/cli/install.rs, src/cli/remove.rs
-use self::{install::install_command, remove::remove_command};
+// 表示从当前模块的 install list remove 子模块导入，而不是从外部 crate 导入。
+// 文件路径为 src/cli/install.rs, src/cli/list.rs, src/cli/remove.rs
+use self::{
+    install::install_command, 
+    list::{list_command, list_command_handler},
+    remove::remove_command,
+};
 
 // 定义 cli_main 函数，该函数返回一个 Command 结构体实例
 fn cli_main() -> Command {
@@ -38,6 +44,8 @@ fn cli_main() -> Command {
        .arg_required_else_help(true)
        // 为命令添加一个子命令，该子命令由 install_command 函数生成
        .subcommand(install_command())
+       // 为命令添加一个子命令，该子命令由 list_command 函数生成
+       .subcommand(list_command())
        // 为命令添加一个子命令，该子命令由 remove_command 函数生成
        .subcommand(remove_command())
         // 为命令添加一个子命令，该子命令由 version_command 函数生成
@@ -59,7 +67,9 @@ pub fn process() {
     match cli_main().get_matches().subcommand() {
         // 如果子命令是 "version"
         Some(("version", _)) => print_version(),
-        // 如果子命令不是 "version"，则程序进入无法到达的状态
+        // 如果子命令是 "list"
+        Some(("list", _)) => list_command_handler(),
+        // 如果不是子命令，则程序进入无法到达的状态
         _ => unreachable!(),
     }
 }
