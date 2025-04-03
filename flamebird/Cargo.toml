@@ -1,0 +1,6 @@
+[package]
+name = "flamebird"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
