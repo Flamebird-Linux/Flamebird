@@ -3,6 +3,8 @@
 // 导入 clap 库中的 Arg、ArgAction 和 Command 结构体，用于构建命令行接口
 use clap::{Arg, ArgAction, Command};
 
+// 引入当前模块下的 info 子模块 文件路径为 src/cli/info.rs
+mod info;
 // 引入当前模块下的 install 子模块 文件路径为 src/cli/install.rs
 mod install;
 // 引入当前模块下的 mod 子模块 文件路径为 src/cli/list.rs
@@ -31,13 +33,15 @@ fn command() -> Command {
         )
         // 要求至少指定一个参数，否则显示帮助信息
        .arg_required_else_help(true)
-       // 为命令添加一个子命令，该子命令由 install_command 函数生成
+       // 为命令添加一个子命令，该子命令由 info command 函数生成
+       .subcommand(info::command())
+       // 为命令添加一个子命令，该子命令由 install command 函数生成
        .subcommand(install::command())
-       // 为命令添加一个子命令，该子命令由 list_command 函数生成
+       // 为命令添加一个子命令，该子命令由 list command 函数生成
        .subcommand(list::command())
-       // 为命令添加一个子命令，该子命令由 remove_command 函数生成
+       // 为命令添加一个子命令，该子命令由 remove command 函数生成
        .subcommand(remove::command())
-        // 为命令添加一个子命令，该子命令由 version_command 函数生成
+        // 为命令添加一个子命令，该子命令由 version command 函数生成
        .subcommand(version::command())
 }
 
